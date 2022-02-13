@@ -25,5 +25,4 @@ jobs:
           source_dir: 'dist'
           container_name: '$web'
           connection_string: ${{ secrets.ConnectionString }}
-          extra_args: '--pattern *.tar.gz'
-          sync: false
+          sync: true
