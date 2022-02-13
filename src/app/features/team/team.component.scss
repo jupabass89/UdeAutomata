@@ -1,0 +1,21 @@
+
+:host {
+  display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: -webkit-fill-available;
+}
+
+.profile {
+  margin: 20px;
+    padding: 20px;
+    width: 400px;
+    height: max-content;
+}
+
+.title {
+  color:#3f51b5;
+  font-weight: bold;
+}

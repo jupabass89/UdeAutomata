@@ -1,0 +1,29 @@
+<article class="automata">
+  <!-- BUTTONS -->
+  <div class="options">
+    <button (click)="openInputDialog()" mat-raised-button color="primary">
+      Ingresar
+    </button>
+    <button [disabled]="!automata || showEvaluate" (click)="simplify()" mat-raised-button color="accent">
+      Simplificar
+    </button>
+    <button [disabled]="!showEvaluate || !evaluateString" (click)="evaluate()" mat-raised-button color="accent">
+      Evaluar
+    </button>
+    <button (click)="clean()" mat-raised-button color="secondary">
+      Limpiar
+    </button>
+  </div>
+
+  <!-- showEvaluate INPUT -->
+  <mat-form-field *ngIf="showEvaluate">
+    <mat-label>Evaluar</mat-label>
+    <input matInput placeholder="Ingese una hilera" [(ngModel)]="evaluateString">
+  </mat-form-field>
+
+  <!-- AUTOMAT -->
+  <mat-card *ngIf="automata" class="main-container">
+    <mat-label class="title">{{ showEvaluate ? 'Simplificado' : 'Original' }}</mat-label>
+    <app-table [automata]="automata"></app-table>
+  </mat-card>
+</article>

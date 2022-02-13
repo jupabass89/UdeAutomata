@@ -1,0 +1,71 @@
+$primary: #3f51b5;
+
+
+.mat-horizontal-content-container  {
+    padding: 0 !important;
+}
+
+
+.main-form {
+    width: 100%;
+    display: flex;
+
+}
+
+.input-estados {
+    display: flex;
+    margin-top: 15px;
+    width: 50%;
+}
+
+
+.end-buttons {
+    display: flex;
+}
+
+.radio-buttons {
+    padding: 0 30px;
+
+    .option {
+        margin: 8px 0;
+    }
+}
+
+.agregar {
+   
+    cursor: pointer;
+    color: $primary;
+    margin: 0 0 0 30px;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.title { 
+
+ span {
+     font-size: larger;
+     font-weight: 700;
+     color: $primary;
+ }
+}
+
+
+
+
+.manage-buttons{   
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-content: end;
+    align-items: center;
+
+    .button {
+        margin: 0 5px;
+        height: 35px;
+    }
+}
+
+
+::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}

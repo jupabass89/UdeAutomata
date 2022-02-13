@@ -1,0 +1,73 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form class="main-form" [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Eestados
+      </ng-template>
+
+      <section class="input-estados">
+        <mat-form-field>
+          <mat-label>Estado</mat-label>
+          <input matInput placeholder="Nombre del estado" formControlName="firstCtrl">
+        </mat-form-field>
+        <mat-radio-group formControlName="statusControl" class="radio-buttons" aria-label="Select an option">
+          <mat-radio-button class="option" [value]="true">Aceptación</mat-radio-button>
+          <mat-radio-button [value]="false">Rechazo</mat-radio-button>
+        </mat-radio-group>
+      </section>
+      <div *ngIf="firstFormGroup.controls['firstCtrl'].value !== '' " class="agregar">
+        <p (click)="addState()">+</p>
+      </div>
+      <div class="manage-buttons">
+        <button class="button" mat-raised-button color="secondary" [mat-dialog-close]=""
+          cdkFocusInitial>Cancelar</button>
+        <button *ngIf="states.length" class="button" mat-raised-button color="primary"
+          matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup">
+    <form class="main-form" [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Entradas</ng-template>
+      <section class="input-estados">
+        <mat-form-field>
+          <mat-label>Entrada</mat-label>
+          <input matInput placeholder="Nombre del estado" formControlName="name" >
+        </mat-form-field>
+      </section>
+      <div class="agregar">
+        <p (click)="addInput()">+</p>
+      </div>
+      <div class="manage-buttons">
+        <button class="button" mat-raised-button color="secondary" [mat-dialog-close]=""
+          cdkFocusInitial>Cancelar</button>
+        <button class="button" mat-raised-button color="primary"
+          matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="lastFormGroup">
+    <mat-label *ngIf="currentState && currentState.name && inputs[inputIndex]" class="title">Estado
+      <span>{{currentState.name}}</span> entrada <span>{{inputs[inputIndex]}}</span>
+    </mat-label>
+    <form class="main-form" [formGroup]="lastFormGroup">
+      <ng-template matStepLabel>Transisiones</ng-template>
+      <section *ngIf="currentState && currentState.name && inputs[inputIndex]" class="input-estados">
+        <mat-form-field>
+          <mat-label>Estado</mat-label>
+          <input matInput placeholder="Nombre del estado" formControlName="transision" required>
+        </mat-form-field>
+      </section>
+      <p *ngIf="currentState && currentState.name && inputs[inputIndex]" class="agregar" (click)="addTransision()">></p>
+      <div class="manage-buttons">
+        <div class="end-buttons">
+          <button class="button" mat-raised-button color="secondary" [mat-dialog-close]=""
+            cdkFocusInitial>Cancelar</button>
+          <button class="button"
+            mat-raised-button color="primary" [mat-dialog-close]="getAutomata()" cdkFocusInitial>Finalizar</button>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>
