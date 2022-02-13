@@ -35,79 +35,18 @@ export class AnalyzerComponent implements OnInit {
         width: '900px',
       });
       dialogRef.afterClosed().subscribe((automata: IAutomata) => {
-        this.automata = automata;
+        if (automata) {
+          this.automata = automata;
+          this._snackBar.open('Automata ingresado!!', '✔', { duration: 1500, panelClass: ['green-snackbar'] });
+        } else {
+          this._snackBar.open('Automata mal formado. Valide el formato e ingreselo nuevamente', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
+          this.clean();
+        }
       });
-
-      // let response: IAutomata = {
-      //   "inputs": [
-      //     "a",
-      //     "b"
-      //   ],
-      //   "states": [
-      //     {
-      //       "acceptance": true,
-      //       "name": "6"
-      //     },
-      //     {
-      //       "acceptance": false,
-      //       "name": "0"
-      //     },
-      //     {
-      //       "acceptance": false,
-      //       "name": "37"
-      //     }
-      //   ],
-      //   "transicions": [
-      //     {
-      //       "inputs": [
-      //         {
-      //           "to": "6",
-      //           "value": "a"
-      //         },
-      //         {
-      //           "to": "37",
-      //           "value": "b"
-      //         }
-      //       ],
-      //       "state": "6"
-      //     },
-      //     {
-      //       "inputs": [
-      //         {
-      //           "to": "0",
-      //           "value": "a"
-      //         },
-      //         {
-      //           "to": "37",
-      //           "value": "b"
-      //         }
-      //       ],
-      //       "state": "0"
-      //     },
-      //     {
-      //       "inputs": [
-      //         {
-      //           "to": "6",
-      //           "value": "a"
-      //         },
-      //         {
-      //           "to": "37",
-      //           "value": "b"
-      //         }
-      //       ],
-      //       "state": "37"
-      //     }
-      //   ],
-      //   "type": 0
-      // }
-      // this.automata = response;
-      this._snackBar.open('Automata ingresado!!', '✔', { duration: 1500, panelClass: ['green-snackbar'] });
     } catch (error) {
       this._snackBar.open('Automata mal formado. Valide el formato e ingreselo nuevamente', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
       this.clean();
     }
-
-
   }
 
   public evaluate(): void {

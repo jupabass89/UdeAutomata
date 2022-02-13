@@ -15,9 +15,6 @@ export class PdfComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public get urlValue() : any {
-    return this.dom.bypassSecurityTrustResourceUrl(this.url);
-  }
 
 
 }

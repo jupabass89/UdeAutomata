@@ -15,10 +15,8 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <app-analyzer *ngIf="menuOptionSelected === 0"></app-analyzer>
-      <ng-container  *ngFor="let item of url; let i = index">
-        <app-pdf *ngIf="pdfOptionSelected(i)" [url]="url[i]"></app-pdf>
-      </ng-container>
-      <app-team *ngIf="menuOptionSelected === 4"></app-team>
+      <app-pdf *ngIf="menuOptionSelected === 1"></app-pdf>
+      <app-team *ngIf="menuOptionSelected === 2"></app-team>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

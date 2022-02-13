@@ -1,4 +1,25 @@
-.pdf-viewer {
-  width: 100%;
-  height: -webkit-fill-available;
+:host {
+  display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: -webkit-fill-available;
+}
+
+.profile {
+  margin: 20px;
+    padding: 20px;
+    width: 400px;
+    height: max-content;
+}
+
+.title {
+  margin: 0 30%;
+  color:#3f51b5;
+  font-weight: bold;
+}
+
+li {
+  margin: 5px;
 }

@@ -3,14 +3,11 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { IAutomata } from '../interfaces/IAutomata';
 import { IState } from '../interfaces/IStae';
 import { IInput, ITransision } from '../interfaces/ITransision';
 
-// export interface DialogData {
-//   animal: string;
-//   name: string;
-// }
 
 @Component({
   selector: 'app-input-modal',
@@ -37,7 +34,8 @@ export class InputModalComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<InputModalComponent>,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.states = [
     ]
@@ -69,7 +67,7 @@ export class InputModalComponent implements OnInit {
 
   public addState(): void {
     let name = this.firstFormGroup.controls['firstCtrl'].value;
-    let exist = this.states.find((item: IState) => item.name === name)
+    let exist = this.states.find((item: IState) => item.name === name);
     if (!exist) {
       let acceptance = this.firstFormGroup.controls['statusControl'].value;
       let state = {
@@ -78,8 +76,8 @@ export class InputModalComponent implements OnInit {
       }
       this.states.push(state);
     } else {
-      console.log('ERROR 1: EL ESTADO YA EXISTE')
-    }    
+      this._snackBar.open('Error: el estado ya existe', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
+    }
     this.firstFormGroup.controls['firstCtrl'].setValue('');
     this.firstFormGroup.controls['statusControl'].setValue(false);
   }
@@ -90,46 +88,64 @@ export class InputModalComponent implements OnInit {
     }
     let name = this.secondFormGroup.controls['name'].value;
     let exist = this.inputs.find((item: string) => item === name);
-    if(!exist){
+    if (!exist) {
       this.inputs.push(name);
     } else {
-      console.log('ERROR 2: LA ENTRADA YA EXISTE')
+      this._snackBar.open('Error: la entrada ya existe', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
     }
     this.secondFormGroup.controls['name'].setValue('');
   }
 
   public addTransision(): void {
     if (this.currentState && this.currentState.name) {
-      if (this.currentTransision && this.currentTransision.state === this.currentState.name) {
-        this.currentTransision.inputs.push({
-          value: this.inputs[this.inputIndex].toString(), // entrada
-          to: this.lastFormGroup.controls['transision'].value.toString() // estado
-        })
-      } else {
+      // let currentState = this.currentTransision && this.currentTransision.state || '';
+      if (!(this.currentTransision && this.currentTransision.state === this.currentState.name)) {
+        // this.validateToAdd();
         // ENTRA LA PRIMER VEZ
         this.currentTransision = {
           state: '',
           inputs: []
         }
         this.currentTransision.state = this.currentState.name;
+      }
+      this.setType();
+      if (this.validateToAdd()) {
+        if (this.inputs.length - 1 > this.inputIndex) {
+          this.inputIndex++;
+        } else {
+          this.inputIndex = 0;
+          this.stateIndex++;
+          if (this.currentTransision) {
+            this.transisions.push(this.currentTransision);
+            this.currentTransision = undefined;
+          }
+        }
+        this.currentState = this.states[this.stateIndex];
+      }
+      // this.validateToAdd();
+
+    }
+  }
+
+  private validateToAdd(): boolean {
+    if (this.currentTransision) {
+      let transision = this.lastFormGroup.controls['transision'].value.toString()
+      let exist = this.states.find((item) => item.name === transision)
+      if (exist) {
         this.currentTransision.inputs.push({
           value: this.inputs[this.inputIndex].toString(), // entrada
           to: this.lastFormGroup.controls['transision'].value.toString() // estado
         })
-      }
-      this.setType()
-      if (this.inputs.length - 1 > this.inputIndex) {
-        this.inputIndex++;
+        this.lastFormGroup.controls['transision'].setValue(undefined)
+        return true
       } else {
-        this.inputIndex = 0;
-        this.stateIndex++;
-        if (this.currentTransision) {
-          this.transisions.push(this.currentTransision);
-          this.currentTransision = undefined;
-        }
+        this.lastFormGroup.controls['transision'].setValue(undefined)
+        this._snackBar.open('Error: estádo no aceptado', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
+        return false
       }
-      this.currentState = this.states[this.stateIndex];
     }
+    this.lastFormGroup.controls['transision'].setValue(undefined)
+    return false
   }
 
   private setType() {
@@ -143,17 +159,28 @@ export class InputModalComponent implements OnInit {
     }
   }
 
-  getAutomata(): IAutomata {
-    return <IAutomata>{
-      states: this.states,
-      inputs: this.inputs,
-      transicions: this.transisions,
-      type: this.type || 0
+  getAutomata(): IAutomata | undefined {
+    if (this.validateAutomata()) {
+      return <IAutomata>{
+        states: this.states,
+        inputs: this.inputs,
+        transicions: this.transisions,
+        type: this.type || 0
+      }
     }
+    return undefined
+
   }
 
   public sendStates() {
     this.dialogRef.close();
   }
 
+  public validateAutomata(): boolean {
+    return !(this.automata && this.automata.states &&
+      this.automata.states.length && this.automata.transicions &&
+      this.automata.transicions.length && this.automata.inputs &&
+      this.automata.inputs.length &&
+      this.automata.type)
+  }
 }

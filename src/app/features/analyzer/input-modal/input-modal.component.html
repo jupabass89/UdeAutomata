@@ -41,7 +41,7 @@
       <div class="manage-buttons">
         <button class="button" mat-raised-button color="secondary" [mat-dialog-close]=""
           cdkFocusInitial>Cancelar</button>
-        <button class="button" mat-raised-button color="primary"
+        <button *ngIf="inputs.length" class="button" mat-raised-button color="primary"
           matStepperNext>Siguiente</button>
       </div>
     </form>
@@ -53,7 +53,7 @@
     </mat-label>
     <form class="main-form" [formGroup]="lastFormGroup">
       <ng-template matStepLabel>Transisiones</ng-template>
-      <section *ngIf="currentState && currentState.name && inputs[inputIndex]" class="input-estados">
+      <section class="input-estados">
         <mat-form-field>
           <mat-label>Estado</mat-label>
           <input matInput placeholder="Nombre del estado" formControlName="transision" required>
@@ -64,7 +64,7 @@
         <div class="end-buttons">
           <button class="button" mat-raised-button color="secondary" [mat-dialog-close]=""
             cdkFocusInitial>Cancelar</button>
-          <button class="button"
+          <button *ngIf="transisions.length >= states.length" class="button"
             mat-raised-button color="primary" [mat-dialog-close]="getAutomata()" cdkFocusInitial>Finalizar</button>
         </div>
       </div>
