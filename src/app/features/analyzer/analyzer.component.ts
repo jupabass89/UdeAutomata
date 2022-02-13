@@ -26,80 +26,80 @@ export class AnalyzerComponent implements OnInit {
   public openInputDialog(): void {
 
     try {
-      // if (this.automata && this.automata.states?.length && this.automata.inputs?.length) {
-      //   // console.log('erase')
-      //   this.clean()
-      // }
-      // const dialogRef = this.dialog.open(InputModalComponent, {
-      //   width: '900px',
-      // });
-      // dialogRef.afterClosed().subscribe((automata: IAutomata) => {
-      //   this.automata = automata;
-      // });
-
-      let response: IAutomata = {
-        "inputs": [
-          "a",
-          "b"
-        ],
-        "states": [
-          {
-            "acceptance": true,
-            "name": "6"
-          },
-          {
-            "acceptance": false,
-            "name": "0"
-          },
-          {
-            "acceptance": false,
-            "name": "37"
-          }
-        ],
-        "transicions": [
-          {
-            "inputs": [
-              {
-                "to": "6",
-                "value": "a"
-              },
-              {
-                "to": "37",
-                "value": "b"
-              }
-            ],
-            "state": "6"
-          },
-          {
-            "inputs": [
-              {
-                "to": "0",
-                "value": "a"
-              },
-              {
-                "to": "37",
-                "value": "b"
-              }
-            ],
-            "state": "0"
-          },
-          {
-            "inputs": [
-              {
-                "to": "6",
-                "value": "a"
-              },
-              {
-                "to": "37",
-                "value": "b"
-              }
-            ],
-            "state": "37"
-          }
-        ],
-        "type": 0
+      if (this.automata && this.automata.states?.length && this.automata.inputs?.length) {
+        // console.log('erase')
+        this.clean()
       }
-      this.automata = response;
+      const dialogRef = this.dialog.open(InputModalComponent, {
+        width: '900px',
+      });
+      dialogRef.afterClosed().subscribe((automata: IAutomata) => {
+        this.automata = automata;
+      });
+
+      // let response: IAutomata = {
+      //   "inputs": [
+      //     "a",
+      //     "b"
+      //   ],
+      //   "states": [
+      //     {
+      //       "acceptance": true,
+      //       "name": "6"
+      //     },
+      //     {
+      //       "acceptance": false,
+      //       "name": "0"
+      //     },
+      //     {
+      //       "acceptance": false,
+      //       "name": "37"
+      //     }
+      //   ],
+      //   "transicions": [
+      //     {
+      //       "inputs": [
+      //         {
+      //           "to": "6",
+      //           "value": "a"
+      //         },
+      //         {
+      //           "to": "37",
+      //           "value": "b"
+      //         }
+      //       ],
+      //       "state": "6"
+      //     },
+      //     {
+      //       "inputs": [
+      //         {
+      //           "to": "0",
+      //           "value": "a"
+      //         },
+      //         {
+      //           "to": "37",
+      //           "value": "b"
+      //         }
+      //       ],
+      //       "state": "0"
+      //     },
+      //     {
+      //       "inputs": [
+      //         {
+      //           "to": "6",
+      //           "value": "a"
+      //         },
+      //         {
+      //           "to": "37",
+      //           "value": "b"
+      //         }
+      //       ],
+      //       "state": "37"
+      //     }
+      //   ],
+      //   "type": 0
+      // }
+      // this.automata = response;
       this._snackBar.open('Automata ingresado!!', '✔', { duration: 1500, panelClass: ['green-snackbar'] });
     } catch (error) {
       this._snackBar.open('Automata mal formado. Valide el formato e ingreselo nuevamente', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
