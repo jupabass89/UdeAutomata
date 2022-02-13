@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AnalyzerService } from '../services/analyzer.service';
+import { InputModalComponent } from './input-modal/input-modal.component';
 import { IAutomata } from './interfaces/IAutomata';
 @Component({
   selector: 'app-analyzer',
