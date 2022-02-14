@@ -38,7 +38,6 @@ export class AnalyzerComponent implements OnInit {
           this.automata = automata;
           this._snackBar.open('Autómata ingresado!!', '✔', { duration: 1500, panelClass: ['green-snackbar'] });
         } else {
-          this._snackBar.open('Autómata mal formado. Valide el formato e ingreselo nuevamente', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
           this.clean();
         }
       });
