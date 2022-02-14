@@ -25,7 +25,6 @@ export class AnalyzerComponent implements OnInit {
   ngOnInit() { }
 
   public openInputDialog(): void {
-
     try {
       if (this.automata && this.automata.states?.length && this.automata.inputs?.length) {
         // console.log('erase')
@@ -37,14 +36,14 @@ export class AnalyzerComponent implements OnInit {
       dialogRef.afterClosed().subscribe((automata: IAutomata) => {
         if (automata) {
           this.automata = automata;
-          this._snackBar.open('Automata ingresado!!', '✔', { duration: 1500, panelClass: ['green-snackbar'] });
+          this._snackBar.open('Autómata ingresado!!', '✔', { duration: 1500, panelClass: ['green-snackbar'] });
         } else {
-          this._snackBar.open('Automata mal formado. Valide el formato e ingreselo nuevamente', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
+          this._snackBar.open('Autómata mal formado. Valide el formato e ingreselo nuevamente', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
           this.clean();
         }
       });
     } catch (error) {
-      this._snackBar.open('Automata mal formado. Valide el formato e ingreselo nuevamente', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
+      this._snackBar.open('Autómata mal formado. Valide el formato e ingreselo nuevamente', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
       this.clean();
     }
   }
@@ -71,7 +70,7 @@ export class AnalyzerComponent implements OnInit {
     this.showEvaluate = false;
     this.evaluateString = '';
     this.automata = undefined;
-    this._snackBar.open('Automata eliminado', '✔', { duration: 1500, panelClass: ['green-snackbar'] });
+
   }
 
   public simplify() {
@@ -80,12 +79,14 @@ export class AnalyzerComponent implements OnInit {
         if (automata) {
           this.showEvaluate = true;
           this.automata = automata;
-          this._snackBar.open('Automata simplificado', '✔', { duration: 1500, panelClass: ['green-snackbar'] });
+          this._snackBar.open('Autómata simplificado', '✔', { duration: 1500, panelClass: ['green-snackbar'] });
         } else {
-          this._snackBar.open('eL Automata NO pudo ser simplificado', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
+          this._snackBar.open('Error formato: Autómata NO pudo ser simplificado', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
+          this.clean();
         }
       }, () => {
-        this._snackBar.open('eL Automata NO pudo ser simplificado', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
+        this._snackBar.open('Error formato: EL Autómata NO pudo ser simplificado', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
+        this.clean();
       })
     }
   }

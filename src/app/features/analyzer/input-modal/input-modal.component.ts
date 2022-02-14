@@ -98,9 +98,7 @@ export class InputModalComponent implements OnInit {
 
   public addTransision(): void {
     if (this.currentState && this.currentState.name) {
-      // let currentState = this.currentTransision && this.currentTransision.state || '';
-      if (!(this.currentTransision && this.currentTransision.state === this.currentState.name)) {
-        // this.validateToAdd();
+      if (!this.currentTransision?.inputs.length || !this.currentTransision?.state) {
         // ENTRA LA PRIMER VEZ
         this.currentTransision = {
           state: '',
@@ -122,26 +120,34 @@ export class InputModalComponent implements OnInit {
         }
         this.currentState = this.states[this.stateIndex];
       }
-      // this.validateToAdd();
 
     }
   }
 
   private validateToAdd(): boolean {
     if (this.currentTransision) {
-      let transision = this.lastFormGroup.controls['transision'].value.toString()
-      let exist = this.states.find((item) => item.name === transision)
-      if (exist) {
+      let transision: string = this.lastFormGroup.controls['transision'].value.toString();
+      if (transision.includes(',')) {
         this.currentTransision.inputs.push({
           value: this.inputs[this.inputIndex].toString(), // entrada
           to: this.lastFormGroup.controls['transision'].value.toString() // estado
         })
         this.lastFormGroup.controls['transision'].setValue(undefined)
-        return true
+        return true;
       } else {
-        this.lastFormGroup.controls['transision'].setValue(undefined)
-        this._snackBar.open('Error: estádo no aceptado', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
-        return false
+        let exist = this.states.find((item) => item.name === transision);
+        if (exist) {
+          this.currentTransision.inputs.push({
+            value: this.inputs[this.inputIndex].toString(), // entrada
+            to: this.lastFormGroup.controls['transision'].value.toString() // estado
+          })
+          this.lastFormGroup.controls['transision'].setValue(undefined)
+          return true;
+        } else {
+          this.lastFormGroup.controls['transision'].setValue(undefined)
+          this._snackBar.open('Error: estádo no aceptado', 'X', { duration: 1500, panelClass: ['red-snackbar'] });
+          return false;
+        }
       }
     }
     this.lastFormGroup.controls['transision'].setValue(undefined)
